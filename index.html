@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>For NIRJALA — Will you be my Valentine? 💖</title>
+<style>
+  :root{
+    --bg-1: #fff6f9;
+    --bg-2: #fff0f6;
+    --rose-1: #ff8fb4;
+    --rose-2: #ffb6d9;
+    --gold: #ffd166;
+    --card: #fffafc;
+    --muted: #5a3b45;
+    --glass: rgba(255,255,255,0.6);
+    --shadow: 0 18px 50px rgba(85,30,50,0.09);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:
+      radial-gradient(800px 400px at 10% 10%, rgba(255,200,220,0.28), transparent 10%),
+      radial-gradient(800px 400px at 90% 90%, rgba(255,230,245,0.28), transparent 10%),
+      linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .card{
+    width:min(920px, 96%);
+    max-width:920px;
+    border-radius:24px;
+    padding:28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,247,249,0.98));
+    box-shadow: var(--shadow);
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* Luxury header */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .logo{
+    width:56px; height:56px; border-radius:12px;
+    background:linear-gradient(135deg,var(--rose-1),var(--rose-2));
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-weight:800; font-size:20px;
+    box-shadow: 0 8px 30px rgba(255,130,170,0.12);
+  }
+  .brand h3{ margin:0; font-size:18px; color: #472632; letter-spacing:0.2px;}
+  .brand p{ margin:0; color:var(--muted); font-size:13px; opacity:0.95 }
+
+  /* Hug counter */
+  .hug-counter{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background: linear-gradient(90deg, rgba(255,250,250,0.8), rgba(255,240,246,0.8));
+    padding:8px 12px; border-radius:14px;
+    border:1px solid rgba(160,80,110,0.06);
+  }
+  .hug-counter .heart{
+    font-size:20px;
+    display:inline-block;
+    transform-origin:center;
+    animation: gentleBeat 2000ms ease-in-out infinite;
+  }
+  @keyframes gentleBeat {
+    0%,100%{ transform: scale(1) }
+    50%{ transform: scale(1.06) }
+  }
+  .hug-counter .count{ font-weight:800; color:#5a2e3b}
+
+  /* Main question */
+  .question {
+    text-align:center;
+    margin-top:12px;
+  }
+  .question h1{
+    margin:6px 0 6px 0;
+    font-size:36px; color:#3a2430;
+  }
+  .question p.lead{ margin:0; color:var(--muted); font-size:15px}
+
+  .actions{
+    display:flex;
+    gap:16px;
+    align-items:center;
+    justify-content:center;
+    margin-top:18px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    border:0; cursor:pointer;
+    padding:12px 18px; border-radius:12px;
+    font-weight:800; font-size:15px;
+    box-shadow: 0 10px 30px rgba(120,40,80,0.06);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:active{ transform: translateY(2px) }
+
+  .btn-yes{
+    background: linear-gradient(90deg,var(--rose-1),var(--rose-2));
+    color:white; text-shadow:0 2px 6px rgba(255,255,255,0.12);
+  }
+  .btn-no{
+    background:transparent;
+    border: 1px solid rgba(120,70,90,0.08);
+    color:var(--muted);
+  }
+
+  /* Decorative floating petals */
+  .petal{
+    position:absolute; pointer-events:none; font-size:20px; opacity:0.95;
+    filter: drop-shadow(0 6px 16px rgba(255,120,160,0.08));
+  }
+
+  /* stage containers */
+  .stage{ display:none; padding-top:12px }
+  .stage.show{ display:block }
+
+  /* after yes / greeting */
+  .greeting{
+    text-align:center; margin-top:6px;
+  }
+  .greeting h2{ margin:6px 0; font-size:30px; color:#3a2430 }
+  .greeting p{ color:var(--muted); margin:0; font-size:15px }
+
+  .proceed{
+    display:flex; gap:12px; justify-content:center; margin-top:18px;
+  }
+  .proceed .btn-proc{
+    background: linear-gradient(90deg,#ff8fb4,#ffb6d9);
+    color:white; padding:12px 18px; border-radius:12px; border:0; font-weight:900;
+  }
+
+  /* compliments / apology page */
+  .panel{
+    margin-top:12px; display:grid; gap:12px;
+    grid-template-columns: 1fr 360px; align-items:start;
+  }
+  @media (max-width:880px){
+    .panel{ grid-template-columns: 1fr; }
+  }
+  .compliments{
+    padding:12px; border-radius:14px; background: linear-gradient(180deg, #fff, #fff7fb);
+    box-shadow: 0 16px 40px rgba(120,40,80,0.03);
+  }
+  .apology{
+    padding:16px; border-radius:14px; background: linear-gradient(180deg, rgba(255,245,247,0.9), rgba(255,235,243,0.9));
+    border:1px solid rgba(160,80,110,0.04);
+  }
+  .apology h4{ margin:0 0 8px; color:#522a37 }
+  .apology p{ margin:0; color:#5b3b44; line-height:1.45 }
+
+  .compliment-list{ display:grid; gap:10px; margin-top:8px }
+  .compliment-item{
+    background: linear-gradient(180deg,#fff,#fff9fb);
+    padding:12px; border-radius:12px; font-weight:700; color:#4a2c35;
+    box-shadow: 0 8px 20px rgba(110,60,80,0.035);
+  }
+
+  /* hug button */
+  .hug-btn{
+    margin-top:12px; display:inline-flex; gap:8px; align-items:center;
+    padding:10px 14px; border-radius:12px; border:0; background:linear-gradient(90deg,#ffd6e6,#ffcbe8);
+    font-weight:800; cursor:pointer;
+  }
+
+  /* reveal final */
+  .reveal{
+    text-align:center; margin-top:16px;
+  }
+  .reveal .btn-reveal{
+    background: linear-gradient(90deg,#ffd166,#ffb6d9); color:white; padding:12px 16px; border-radius:12px; border:0;
+    font-weight:900; cursor:pointer;
+  }
+
+  /* love screen */
+  #loveScreen{ text-align:center; padding:18px; display:none; }
+  #loveScreen.show{ display:block }
+  .big-heart{
+    font-size:110px; display:inline-block; transform-origin:center;
+    color: #ff3b8a;
+    filter: drop-shadow(0 20px 50px rgba(255,70,120,0.12));
+    animation: heartBeat 800ms ease-in-out infinite;
+    cursor:pointer;
+  }
+  @keyframes heartBeat {
+    0%,100%{ transform: scale(1) }
+    50%{ transform: scale(1.14) }
+  }
+  .final-note{ margin-top:8px; color:#5a3240; font-size:18px; max-width:760px; margin-left:auto; margin-right:auto; line-height:1.45 }
+
+  /* confetti */
+  .confetti{
+    position:absolute; width:10px; height:10px; border-radius:3px; pointer-events:none; opacity:0.95;
+    animation: fall linear forwards;
+  }
+  @keyframes fall{ to { transform: translateY(950px) rotate(360deg); opacity:0.95 } }
+
+  /* small responsive */
+  @media (max-width:520px){
+    .logo{ width:48px; height:48px; font-size:18px }
+    .question h1{ font-size:26px }
+    .big-heart{ font-size:86px }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="card" role="main" aria-live="polite">
+
+  <header>
+    <div class="brand">
+      <div class="logo">♡</div>
+      <div>
+        <h3>For NIRJALA</h3>
+        <p>Made with everything I have — SURAJ</p>
+      </div>
+    </div>
+
+    <div class="hug-counter" title="Hugs given">
+      <div class="heart" id="smallPulse">💗</div>
+      <div style="font-size:13px; color:#6b3b46">Hugs</div>
+      <div class="count" id="hugCount" style="font-size:16px;">0</div>
+    </div>
+  </header>
+
+  <!-- question -->
+  <section id="initial" class="stage show">
+    <div class="question">
+      <h1>Will you be my Valentine, NIRJALA? 💖</h1>
+      <p class="lead">I created this just for you — gentle colours, flowers, and words from my heart. Pick one:</p>
+    </div>
+
+    <div class="actions" id="actions">
+      <button id="yesBtn" class="btn btn-yes" aria-label="Yes">Yes 💝</button>
+      <button id="noBtn" class="btn btn-no" aria-label="No">No 🙈</button>
+    </div>
+  </section>
+
+  <!-- after yes -->
+  <section id="afterYes" class="stage">
+    <div class="greeting">
+      <h2>Yes! You made me the happiest, NIRJALA 🌟</h2>
+      <p>Thank you for being the warm light of my days. Please — a little more of your time, I have few things to say dear.</p>
+    </div>
+
+    <div class="proceed">
+      <button id="proceedBtn" class="btn btn-proc">I have few things to say dear</button>
+    </div>
+  </section>
+
+  <!-- compliments + apology -->
+  <section id="complimentsStage" class="stage">
+    <div class="panel">
+      <div class="compliments">
+        <h3 style="margin:0 0 6px;">For you — the sweetest truths</h3>
+        <div class="compliment-list" id="complimentList">
+          <!-- compliments will be injected -->
+        </div>
+
+        <button id="hugBtn" class="hug-btn" aria-pressed="false">Send a hug 🤗</button>
+
+        <div class="reveal">
+          <button id="revealBtn" class="btn-reveal">Reveal something special</button>
+        </div>
+      </div>
+
+      <aside class="apology">
+        <h4>My heart wants to say</h4>
+        <p>
+          NIRJALA — I'm sorry for the times I've been careless, for the moments I made things heavy, or when I hurt you.
+          You never deserved that. You deserve joy, softness, and someone who shows up with kindness every day.
+          I am learning, and I promise to keep trying — because you are worth every effort.
+          Thank you for staying, thank you for your beautiful patience. I love you, always.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- final love screen -->
+  <section id="loveScreen">
+    <div style="padding-top:6px; text-align:center;">
+      <div id="finalHeart" class="big-heart" title="Tap to send a heart">❤️</div>
+      <div class="final-note" id="finalNote">
+        From the bottom of my heart, today and always.<br>
+        You are my peace, my happiness, my forever — NIRJALA.
+      </div>
+      <div style="margin-top:14px; text-align:center; font-weight:800; color:#5a2e3b;">
+        — SURAJ
+      </div>
+    </div>
+  </section>
+
+  <!-- decorative petals (generated by JS) -->
+  <div id="decorRoot"></div>
+
+</div>
+
+<script>
+/* PERSONALIZATION (already set) */
+const HER_NAME = "NIRJALA";
+const YOUR_NAME = "SURAJ";
+
+/* State */
+let hugCount = 0;
+
+/* Elements */
+const initial = document.getElementById('initial');
+const afterYes = document.getElementById('afterYes');
+const complimentsStage = document.getElementById('complimentsStage');
+const loveScreen = document.getElementById('loveScreen');
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const proceedBtn = document.getElementById('proceedBtn');
+const revealBtn = document.getElementById('revealBtn');
+const hugBtn = document.getElementById('hugBtn');
+const hugCountEl = document.getElementById('hugCount');
+const smallPulse = document.getElementById('smallPulse');
+const finalHeart = document.getElementById('finalHeart');
+
+const card = document.querySelector('.card');
+
+/* Compliments array — sweetest, refined */
+const compliments = [
+  "Your smile turns ordinary moments into golden memories.",
+  "Being with you feels like home — warm, safe, and beautiful.",
+  "You are the kindest soul I've ever known; your heart glows.",
+  "Every laugh of yours is my favorite melody.",
+  "You have a grace that brightens every room you enter.",
+  "I'm endlessly grateful for the tenderness you show me.",
+  "Your courage and softness make you utterly breathtaking.",
+  "You make me want to be the best person I can be.",
+  "Your presence is the gentlest kind of magic.",
+  "I cherish the way you dream and the way you love.",
+  "You are my favorite story, my sweetest every day. 💐"
+];
+
+/* Populate compliments */
+const listRoot = document.getElementById('complimentList');
+function populateCompliments(){
+  listRoot.innerHTML = "";
+  compliments.forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'compliment-item';
+    el.innerText = c;
+    listRoot.appendChild(el);
+    // small entrance
+    el.style.opacity = 0;
+    el.style.transform = 'translateY(8px)';
+    setTimeout(()=>{ el.style.transition = 'all .4s cubic-bezier(.2,.9,.3,1)'; el.style.opacity = 1; el.style.transform='translateY(0)'; }, 60*i);
+  });
+}
+
+/* Floating petals generator */
+function spawnPetals(){
+  const icons = ['🌸','🌷','💐','✨','🌺'];
+  for(let i=0;i<10;i++){
+    const el = document.createElement('div');
+    el.className = 'petal';
+    el.innerText = icons[Math.floor(Math.random()*icons.length)];
+    el.style.left = (5 + Math.random()*90) + '%';
+    el.style.top = (-10 - Math.random()*50) + 'px';
+    el.style.fontSize = (14 + Math.random()*22) + 'px';
+    el.style.opacity = 0.95;
+    card.appendChild(el);
+    animatePetal(el, 4000 + Math.random()*9000, 20 + Math.random()*60);
+  }
+}
+function animatePetal(el, duration, horizontalShift){
+  const startTop = parseFloat(el.style.top);
+  const endTop = 900;
+  const startLeft = parseFloat(el.style.left);
+  const dir = Math.random() > 0.5 ? 1 : -1;
+  let start = null;
+  function step(ts){
+    if(!start) start = ts;
+    const progress = Math.min(1, (ts - start) / duration);
+    const top = startTop + progress * (endTop - startTop);
+    const left = startLeft + Math.sin(progress * Math.PI * 2) * (horizontalShift * dir) * 0.5;
+    el.style.top = top + 'px';
+    el.style.left = left + '%';
+    el.style.transform = `rotate(${progress * 360 * dir}deg)`;
+    if(progress < 1) requestAnimationFrame(step);
+    else el.remove();
+  }
+  requestAnimationFrame(step);
+}
+
+/* Confetti for celebration */
+function createConfetti(count=24){
+  const colors = ['#FF6FA3','#FFB6D9','#FFD1E6','#FFD166','#FF8FB4'];
+  for(let i=0;i<count;i++){
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = (10 + Math.random()*80) + '%';
+    c.style.top = (-10 - Math.random()*40) + 'px';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.width = (6 + Math.random()*12) + 'px';
+    c.style.height = (6 + Math.random()*12) + 'px';
+    c.style.opacity = 0.95;
+    c.style.transform = `rotate(${Math.random()*360}deg)`;
+    c.style.animationDuration = (2 + Math.random()*3) + 's';
+    card.appendChild(c);
+    setTimeout(()=>c.remove(), 6000);
+  }
+}
+
+/* No button evasive behaviour (playful) */
+let evadeCount = 0;
+function moveNo(e){
+  evadeCount++;
+  const pad = 18;
+  const pw = card.clientWidth;
+  const ph = card.clientHeight;
+  const bw = noBtn.offsetWidth;
+  const bh = noBtn.offsetHeight;
+  const minX = pad;
+  const maxX = pw - bw - pad;
+  const minY = 120;
+  const maxY = ph - bh - pad - 20;
+  let nx, ny, tries = 0;
+  const yesRect = yesBtn.getBoundingClientRect();
+  do {
+    nx = Math.floor(minX + Math.random()*(Math.max(minX+10, maxX-minX)));
+    ny = Math.floor(minY + Math.random()*(Math.max(10, maxY-minY)));
+    tries++;
+  } while(tries < 60 && isNearYes(nx, ny));
+  // animate via transform for smoothness
+  noBtn.style.transition = 'transform .18s cubic-bezier(.2,.9,.3,1)';
+  const rect = noBtn.getBoundingClientRect();
+  const parentRect = card.getBoundingClientRect();
+  const curX = rect.left - parentRect.left;
+  const curY = rect.top - parentRect.top;
+  const dx = nx - curX;
+  const dy = ny - curY;
+  noBtn.style.transform = `translate(${dx}px, ${dy}px)`;
+  setTimeout(()=> {
+    noBtn.style.transition = '';
+    noBtn.style.transform = '';
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = nx + 'px';
+    noBtn.style.top = ny + 'px';
+    if(evadeCount > 12 && !document.querySelector('.cheeky')){
+      const note = document.createElement('div');
+      note.className = 'cheeky';
+      note.style.position='absolute';
+      note.style.left='50%';
+      note.style.transform='translateX(-50%)';
+      note.style.top='220px';
+      note.style.fontSize='14px';
+      note.style.color='#9a4370';
+      note.style.opacity=0.98;
+      note.style.background='rgba(255,245,248,0.6)';
+      note.style.padding='8px 12px';
+      note.style.borderRadius='10px';
+      note.style.boxShadow='0 8px 20px rgba(140,60,90,0.04)';
+      note.innerText = "You can only click YES 😉";
+      card.appendChild(note);
+      setTimeout(()=>note.remove(), 4200);
+    }
+  }, 200);
+}
+function isNearYes(x,y){
+  const yesRect = yesBtn.getBoundingClientRect();
+  const parentRect = card.getBoundingClientRect();
+  const yesX = yesRect.left - parentRect.left + yesRect.width/2;
+  const yesY = yesRect.top - parentRect.top + yesRect.height/2;
+  const testX = x + noBtn.offsetWidth/2;
+  const testY = y + noBtn.offsetHeight/2;
+  const dist = Math.hypot(yesX-testX, yesY-testY);
+  return dist < 120;
+}
+
+/* Ensure No button absolute on small screens */
+function ensureNoPosition(){
+  const parent = card;
+  if(getComputedStyle(noBtn).position !== 'absolute'){
+    const startX = parent.clientWidth/2 + 80;
+    const startY = 170;
+    noBtn.style.position='absolute';
+    noBtn.style.left = startX + 'px';
+    noBtn.style.top = startY + 'px';
+  }
+}
+
+/* Event handlers flow */
+yesBtn.addEventListener('click', ()=>{
+  initial.classList.remove('show');
+  afterYes.classList.add('show');
+  spawnPetals();
+  createConfetti(12);
+  // gentle pulse
+  smallPulse.style.animation = 'gentleBeat 1800ms ease-in-out infinite';
+});
+
+noBtn.addEventListener('mouseenter', moveNo);
+card.addEventListener('mousemove', (e)=>{
+  // detect proximity to no center
+  const rect = card.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  const nb = noBtn.getBoundingClientRect();
+  const nbx = nb.left - rect.left + nb.width/2;
+  const nby = nb.top - rect.top + nb.height/2;
+  const d = Math.hypot(mx-nbx, my-nby);
+  if(d < 110) moveNo();
+});
+
+/* Proceed to compliments */
+proceedBtn.addEventListener('click', ()=>{
+  afterYes.classList.remove('show');
+  complimentsStage.classList.add('show');
+  populateCompliments();
+  ensureNoPosition();
+});
+
+/* Hug button increments counter */
+function updateHugUI(){
+  hugCountEl.innerText = hugCount;
+  // small scale pop on counter
+  hugCountEl.style.transition = 'transform .18s cubic-bezier(.2,.9,.3,1)';
+  hugCountEl.style.transform = 'scale(1.12)';
+  setTimeout(()=> hugCountEl.style.transform = 'scale(1)', 180);
+}
+hugBtn.addEventListener('click', ()=>{
+  hugCount++;
+  updateHugUI();
+  createBurst(['🤗','💖','🌸'], 10);
+});
+
+/* final reveal */
+revealBtn.addEventListener('click', ()=>{
+  complimentsStage.classList.remove('show');
+  loveScreen.classList.add('show');
+  // personalize final note
+  const fnote = document.getElementById('finalNote');
+  fnote.innerHTML = `From the bottom of my heart, today and always.<br>
+    You are my peace, my happiness, my forever — ${HER_NAME}.`;
+  // add heart confetti
+  createConfetti(36);
+});
+
+/* clicking the big heart sends hug too with heartbeat pop */
+finalHeart.addEventListener('click', ()=>{
+  hugCount++;
+  updateHugUI();
+  // larger burst
+  createBurst(['❤️','💖','🌸','✨','💐'], 22);
+});
+
+/* helper: small burst of emojis */
+function createBurst(pool, n=12){
+  for(let i=0;i<n;i++){
+    const el = document.createElement('div');
+    el.style.position='absolute'; el.style.left='50%'; el.style.top='46%';
+    el.style.transform='translate(-50%,-50%) scale(0.7)'; el.style.pointerEvents='none';
+    el.style.fontSize = (12 + Math.random()*24) + 'px';
+    el.style.opacity = 0.98;
+    el.innerText = pool[Math.floor(Math.random()*pool.length)];
+    card.appendChild(el);
+    const angle = Math.random()*Math.PI*2;
+    const dist = 40 + Math.random()*180;
+    const tx = Math.cos(angle)*dist;
+    const ty = Math.sin(angle)*dist;
+    el.style.transition = `transform ${700 + Math.random()*800}ms cubic-bezier(.2,.9,.3,1), opacity 900ms ease`;
+    setTimeout(()=> el.style.transform = `translate(${tx}px, ${ty}px) scale(1)`, 10);
+    setTimeout(()=> el.style.opacity = 0, 800 + Math.random()*700);
+    setTimeout(()=> el.remove(), 1700 + Math.random()*1000);
+  }
+}
+
+/* initial spawn */
+spawnPetals();
+ensureNoPosition();
+
+/* small accessibility/keyboard support */
+yesBtn.addEventListener('keyup', e => { if(e.key==='Enter' || e.key===' ') yesBtn.click(); });
+noBtn.addEventListener('keyup', e => { if(e.key==='Enter' || e.key===' ') noBtn.click(); });
+
+/* keep hugCount persisted in session (optional) */
+if(sessionStorage.getItem('hugCount')){
+  hugCount = parseInt(sessionStorage.getItem('hugCount'),10) || 0;
+  updateHugUI();
+}
+setInterval(()=> sessionStorage.setItem('hugCount', String(hugCount)), 1200);
+
+</script>
+</body>
+</html>
